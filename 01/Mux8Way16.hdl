@@ -12,7 +12,7 @@
  */
 
 CHIP Mux8Way16 {
-    IN a[16], b[16], c[16], d[16], sel[2];
+    IN a[16], b[16], c[16], d[16], sel[3];
     OUT out[16];
 
     PARTS:
