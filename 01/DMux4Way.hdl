@@ -1,0 +1,40 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux4Way.hdl
+
+/**
+ * 4-way demultiplexor:
+ * {a, b, c, d} = {in, 0, 0, 0} if sel == 00
+ *                {0, in, 0, 0} if sel == 01
+ *                {0, 0, in, 0} if sel == 10
+ *                {0, 0, 0, in} if sel == 11
+ */
+
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+
+    PARTS:
+		Nand(a = sel[0], b = sel[0], out = notSel1);
+		Nand(a = sel[1], b = sel[1], out = notSel2);
+		Nand(a = in, b = notSel1, out = out1);
+		Nand(a = out1, b = out1, out = notOut1);
+		Nand(a = notOut1, b = notSel2, out = out2);
+		Nand(a = out2, b = out2, out = a);
+		
+		Nand(a = in, b = sel[0], out = out3);
+		Nand(a = out3, b = out3, out = notOut3);
+		Nand(a = notOut3, b = notSel2, out = out4);
+		Nand(a = out4, b = out4, out = b);
+		
+		Nand(a = in, b = notSel1, out = out5);
+		Nand(a = out5, b = out5, out = notOut5);
+		Nand(a = notOut5, b = sel[1], out = out6);
+		Nand(a = out6, b = out6, out = c);
+		
+		Nand(a = in, b = sel[0], out = out7);
+		Nand(a = out7, b = out7, out = notOut7);
+		Nand(a = notOut7, b = sel[1], out = out8);
+		Nand(a = out8, b = out8, out = d);
+}
