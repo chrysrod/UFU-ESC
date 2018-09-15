@@ -28,35 +28,38 @@
 
 CHIP ALU {
     IN  
-        x[16], y[16],  // 16-bit inputs        
-        zx, // zero the x input?
-        nx, // negate the x input?
-        zy, // zero the y input?
-        ny, // negate the y input?
-        f,  // compute out = x + y (if 1) or x & y (if 0)
-        no; // negate the out output?
+        x[16], y[16],       
+        zx, 		   	// zero the x input
+        nx, 			// negate the x input
+        zy, 			// zero the y input
+        ny, 			// negate the y input
+        f,  			// if (f == 1) out = x + y else out = x & y
+        no; 			// negate the output
 
     OUT 
-        out[16], // 16-bit output
-        zr, // 1 if (out == 0), 0 otherwise
-        ng; // 1 if (out < 0),  0 otherwise
+        out[16],
+        zr, 			// if (out == 0) then 1 else 0
+        ng; 			// if (out < 0) then 1 else 0
 
     PARTS:
-    // Put you code here:
-    Mux16(a=x, b=false, sel=zx, out=zxo);
-    Mux16(a=y, b=false, sel=zy, out=zyo);
-    Not16(in=zxo, out=nzxo);
-    Not16(in=zyo, out=nzyo);
-    Mux16(a=zxo, b=nzxo, sel=nx, out=nxo);
-    Mux16(a=zyo, b=nzyo, sel=ny, out=nyo);
-    And16(a=nxo, b=nyo, out=ando);
-    Add16(a=nxo, b=nyo, out=addo);
-    Mux16(a=ando, b=addo, sel=f, out=fo);
-    Not16(in=fo, out=foo);
-    Mux16(a=fo, b=foo, sel=no, out[0..7]=tempout1, out[8..15]=tempout2, out[15]=tempout3, out=out);
-    Or8Way(in[0..7]=tempout1, out=temporout1);
-    Or8Way(in[0..7]=tempout2, out=temporout2);
-    Or(a=temporout1, b=temporout2, out=orout);
-    Not(in=orout, out=zr);    
-    And(a=tempout3, b=true, out=ng);   
+		Mux16(a = x, b = false, sel = zx, out = zeroedX);
+		Mux16(a = y, b = false, sel = zy, out = zeroedY);
+
+		Not16(in = zeroedX, out = notX);
+		Mux16(a = zeroedX, b = notX, sel = nx, out = finalX);
+
+		Not16(in = zeroedY, out = notY);
+		Mux16(a = zeroedY, b = notY, sel = ny, out = finalY);
+
+		And16(a = finalX, b = finalY, out = anded);
+		Add16(a = finalX, b = finalY, out = added);
+		Mux16(a = anded, b = added, sel = f, out = prelim);
+
+		Not16(in = prelim, out = notPrelim);
+		Mux16(a = prelim, b = notPrelim, sel = no, out[0..7] = left, out[8..15] = right, out[15] = ng, out = out);
+
+		Or8Way(in = left, out = orLeft);
+		Or8Way(in = right, out = orRight);
+		Or(a = orLeft, b = orRight, out = temp);
+		Not(in = temp, out = zr);
 }
