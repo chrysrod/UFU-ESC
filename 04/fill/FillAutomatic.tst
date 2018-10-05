@@ -34,3 +34,4 @@ repeat 1000000 {
   ticktock;
 }
 output;              // test that the screen is white
+

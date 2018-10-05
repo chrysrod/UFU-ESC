@@ -13,46 +13,40 @@
 
 // Put your code here.
 
-(RESET) 
+(RESET)
 	@SCREEN
-	D=A
-	@cur_screen_word 
-	M=D
+	D = A
+	@i
+	M = D
 
-(LOOP)	
+(FOR)
+	@i
+	M = M - 1
+	D = M
+	@SCREEN
+	D = D - M
+	@RESET
+	D;JLE
 	@KBD
-	D=M
+	D = M
+	@BLACK
+	D;JGT
+	@WHITE
+	D;JEQ
 	
-	@FILL 
-	D; JGT
-	
-	@BLANK 
-	0; JMP
-	
-(FILL)
-	@cur_screen_word
-	A=M
-	M=-1
-	
-	@CHECK
-	0; JMP
-	
-(BLANK)
-	@cur_screen_word
-	A=M
-	M=0
-	
-	@CHECK
-	0; JMP
-	
-(CHECK) 
-	@cur_screen_word
-	MD=M+1
-	@KBD
-	D=D-A
-	
-	@RESET 
-	D; JEQ
-	
-	@LOOP 
-	0; JMP
+(BLACK)
+	@24576
+	D = A
+	@i
+	A = D - M
+	M = -1
+	@FOR
+	0;JMP
+(WHITE)
+	@24576
+	D = A
+	@i
+	A = D - M
+	M = 0
+	@FOR
+	0;JMP
