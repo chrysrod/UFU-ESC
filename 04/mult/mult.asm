@@ -8,34 +8,35 @@
 
 // Put your code here.
 
-@R1
-D=M
-@i
-M=D
-
-
 @R2
-M=0
+M = 0
+@i
+M = 0
 
 (LOOP)
-
-@i
-D=M
-@END
-D;JEQ
-
-@R0
-D=M
-@R2
-M=D+M
-
-@i
-M=M-1
-
-@LOOP
-0; JMP
-
-
+	@R0
+	D = M
+	@END
+	D;JEQ
+	@R1
+	D = M
+	@END
+	D;JEQ
+	@R2
+	D = M
+	@R0
+	D = D + M
+	@R2
+	M = D
+	@R1
+	D = M
+	@i
+	M = M + 1
+	D = D - M	
+	@END
+	D;JEQ
+	@LOOP
+	0;JMP
 (END)
-@END
-0; JMP
+	@END
+	0;JMP
