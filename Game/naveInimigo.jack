@@ -1,0 +1,143 @@
+class naveInimigo {
+    field boolean estaVivo;
+    field boolean estaExplodindo;
+    field int raioExplosao, raioMaxExplosao;
+    field int x, y;
+    field boolean toLeft;
+    field int offset;
+
+    constructor naveInimigo new() {
+        let raioMaxExplosao = 10;
+        let raioExplosao = 0;
+        return this;
+    }
+
+    method void descartar() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void colocaInimigos(int Ax, int Ay) {
+        let raioExplosao = 0;
+        let estaVivo = true;
+        let estaExplodindo = false;
+        let x = Ax;
+        let y = Ay;
+        return;
+    }
+
+    method void desativar() {
+        let estaVivo = false;
+        let estaExplodindo = false;
+        do erase();
+        return;
+    }
+
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method boolean estaVivo() { return estaVivo; }
+
+    method void explode() {
+        let estaExplodindo = true;
+        if (raioExplosao < raioMaxExplosao) {
+            do erase();
+            do Screen.setColor(true);
+            do Screen.drawCircle(x + 8, y + 8, raioExplosao);
+            if (raioExplosao > 2) {
+                do Screen.setColor(false);
+                do Screen.drawCircle(x + 8, y + 8, raioExplosao - 2);
+            }
+            let raioExplosao = raioExplosao + 2;
+        }
+        else {
+            do desativar();
+            do Screen.setColor(false);
+            do Screen.drawCircle(x + 8, y + 8, raioExplosao);
+        }
+        return;
+    }
+
+    method void draw() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress+0, 17826);
+        do Memory.poke(memAddress+32, 9156);
+        do Memory.poke(memAddress+64, 6552);
+        do Memory.poke(memAddress+96, 2016);
+        do Memory.poke(memAddress+128, 8184);
+        do Memory.poke(memAddress+160, 5064);
+        do Memory.poke(memAddress+192, 4488);
+        do Memory.poke(memAddress+224, 16380);
+        do Memory.poke(memAddress+256, 18834);
+        do Memory.poke(memAddress+288, -28087);
+        do Memory.poke(memAddress+320, -28087);
+        do Memory.poke(memAddress+352, -28663);
+        do Memory.poke(memAddress+384, -30703);
+        do Memory.poke(memAddress+416, 16386);
+        do Memory.poke(memAddress+448, 12876);
+        do Memory.poke(memAddress+480, 3120);
+        return;
+    }
+
+    method void erase() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+
+    method void moveDown() {
+        if (y < 230) {
+            do erase();
+            let y = y + 2;
+            if (toLeft) {
+                if (offset < 8) {
+                    let x = x - 2;
+                    let offset = offset + 1;
+                }
+                else {
+                    let toLeft = false;
+                    let offset = 0;
+                }
+            }
+            else {
+                if (offset < 8) {
+                    let x = x + 2;
+                    let offset = offset + 1;
+                }
+                else {
+                    let toLeft = true;
+                    let offset = 0;
+                }
+            }
+            do draw();
+        }
+        return;
+    }
+
+    method void jogar() {
+        if (~estaVivo) { return; }
+        if (~estaExplodindo) {
+            do moveDown();
+        }
+        else {
+            do explode();
+        }
+        return;
+    }
+}

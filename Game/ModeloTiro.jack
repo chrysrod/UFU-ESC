@@ -1,0 +1,216 @@
+class ModeloTiro {
+    field Tiro tiro01;
+    field Tiro tiro02;
+    field Tiro tiro03;
+    field Tiro tiro04;
+    field Tiro tiro05;
+    field Tiro tiro06;
+    field Tiro tiro07;
+    field Tiro tiro08;
+    field Tiro tiro09;
+    field Tiro tiro10;
+    field Tiro tiro11;
+    field Tiro tiro12;
+    field Tiro tiro13;
+    field Tiro tiro14;
+    field Tiro tiro15;
+    field Tiro tiro16;
+    field Tiro tiro17;
+    field Tiro tiro18;
+    field Tiro tiro19;
+    field Tiro tiro20;
+
+    constructor ModeloTiro new() {
+        let tiro01 = Tiro.new();
+        let tiro02 = Tiro.new();
+        let tiro03 = Tiro.new();
+        let tiro04 = Tiro.new();
+        let tiro05 = Tiro.new();
+        let tiro06 = Tiro.new();
+        let tiro07 = Tiro.new();
+        let tiro08 = Tiro.new();
+        let tiro09 = Tiro.new();
+        let tiro10 = Tiro.new();
+        let tiro11 = Tiro.new();
+        let tiro12 = Tiro.new();
+        let tiro13 = Tiro.new();
+        let tiro14 = Tiro.new();
+        let tiro15 = Tiro.new();
+        let tiro16 = Tiro.new();
+        let tiro17 = Tiro.new();
+        let tiro18 = Tiro.new();
+        let tiro19 = Tiro.new();
+        let tiro20 = Tiro.new();
+        return this;
+    }
+
+    method void descartar() {
+        do tiro01.descartar();
+        do tiro02.descartar();
+        do tiro03.descartar();
+        do tiro04.descartar();
+        do tiro05.descartar();
+        do tiro06.descartar();
+        do tiro07.descartar();
+        do tiro08.descartar();
+        do tiro09.descartar();
+        do tiro10.descartar();
+        do tiro11.descartar();
+        do tiro12.descartar();
+        do tiro13.descartar();
+        do tiro14.descartar();
+        do tiro15.descartar();
+        do tiro16.descartar();
+        do tiro17.descartar();
+        do tiro18.descartar();
+        do tiro19.descartar();
+        do tiro20.descartar();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void jogar(ModeloInimigo e) {
+        
+        do tiro01.jogar();
+        do tiro02.jogar();
+        do tiro03.jogar();
+        do tiro04.jogar();
+        do tiro05.jogar();
+        do tiro06.jogar();
+        do tiro07.jogar();
+        do tiro08.jogar();
+        do tiro09.jogar();
+        do tiro10.jogar();
+        do tiro11.jogar();
+        do tiro12.jogar();
+        do tiro13.jogar();
+        do tiro14.jogar();
+        do tiro15.jogar();
+        do tiro16.jogar();
+        do tiro17.jogar();
+        do tiro18.jogar();
+        do tiro19.jogar();
+        do tiro20.jogar();
+        do checaInimigoAbatido(e);
+        return;
+    }
+
+    method void atirar(int x, int y) {
+        if (~tiro01.statusVivo()) {
+            do tiro01.atirar(x, y);
+        } else { if (~tiro02.statusVivo()) {
+            do tiro02.atirar(x, y);
+        } else { if (~tiro03.statusVivo()) {
+            do tiro03.atirar(x, y);
+        } else { if (~tiro04.statusVivo()) {
+            do tiro04.atirar(x, y);
+        } else { if (~tiro05.statusVivo()) {
+            do tiro05.atirar(x, y);
+        } else { if (~tiro06.statusVivo()) {
+            do tiro06.atirar(x, y);
+        } else { if (~tiro07.statusVivo()) {
+            do tiro07.atirar(x, y);
+        } else { if (~tiro08.statusVivo()) {
+            do tiro08.atirar(x, y);
+        } else { if (~tiro09.statusVivo()) {
+            do tiro09.atirar(x, y);
+        } else { if (~tiro10.statusVivo()) {
+            do tiro10.atirar(x, y);
+        } else { if (~tiro11.statusVivo()) {
+            do tiro11.atirar(x, y);
+        } else { if (~tiro12.statusVivo()) {
+            do tiro12.atirar(x, y);
+        } else { if (~tiro13.statusVivo()) {
+            do tiro13.atirar(x, y);
+        } else { if (~tiro14.statusVivo()) {
+            do tiro14.atirar(x, y);
+        } else { if (~tiro15.statusVivo()) {
+            do tiro15.atirar(x, y);
+        } else { if (~tiro16.statusVivo()) {
+            do tiro16.atirar(x, y);
+        } else { if (~tiro17.statusVivo()) {
+            do tiro17.atirar(x, y);
+        } else { if (~tiro18.statusVivo()) {
+            do tiro18.atirar(x, y);
+        } else { if (~tiro19.statusVivo()) {
+            do tiro19.atirar(x, y);
+        } else { if (~tiro20.statusVivo()) {
+            do tiro20.atirar(x, y);
+        }}}}}}}}}}}}}}}}}}}}
+        return;
+    }
+
+    method boolean inimigoAbatido(Tiro b, naveInimigo e) {
+        var int bx, by, ex, ey;
+        if (~b.statusVivo()) { return false; }
+        if (~e.estaVivo()) { return false; }
+        let bx = b.getX();
+        let by = b.getY();
+        let ex = e.getX();
+        let ey = e.getY();
+        if (by < ey) {
+            if (bx > (ex - 18)) {
+                if (bx < (ex + 18)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    method void explosao(Tiro b, naveInimigo e) {
+        do e.explode();
+        do b.desativar();
+        return;
+    }
+
+    method void checaInimigoAbatido(ModeloInimigo inimigos) {
+        do inimigos.checaInimigoAtingido(this);
+        return;
+    }
+
+    method void checaInimigoAbatidoParaCadaTiro(naveInimigo inimigo) {
+        if (inimigoAbatido(tiro01, inimigo)) {
+            do explosao(tiro01, inimigo);
+        } else { if (inimigoAbatido(tiro02, inimigo)) {
+            do explosao(tiro02, inimigo);
+        } else { if (inimigoAbatido(tiro03, inimigo)) {
+            do explosao(tiro03, inimigo);
+        } else { if (inimigoAbatido(tiro04, inimigo)) {
+            do explosao(tiro04, inimigo);
+        } else { if (inimigoAbatido(tiro05, inimigo)) {
+            do explosao(tiro05, inimigo);
+        } else { if (inimigoAbatido(tiro06, inimigo)) {
+            do explosao(tiro06, inimigo);
+        } else { if (inimigoAbatido(tiro07, inimigo)) {
+            do explosao(tiro07, inimigo);
+        } else { if (inimigoAbatido(tiro08, inimigo)) {
+            do explosao(tiro08, inimigo);
+        } else { if (inimigoAbatido(tiro09, inimigo)) {
+            do explosao(tiro09, inimigo);
+        } else { if (inimigoAbatido(tiro10, inimigo)) {
+            do explosao(tiro10, inimigo);
+        } else { if (inimigoAbatido(tiro11, inimigo)) {
+            do explosao(tiro11, inimigo);
+        } else { if (inimigoAbatido(tiro12, inimigo)) {
+            do explosao(tiro12, inimigo);
+        } else { if (inimigoAbatido(tiro13, inimigo)) {
+            do explosao(tiro13, inimigo);
+        } else { if (inimigoAbatido(tiro14, inimigo)) {
+            do explosao(tiro14, inimigo);
+        } else { if (inimigoAbatido(tiro15, inimigo)) {
+            do explosao(tiro15, inimigo);
+        } else { if (inimigoAbatido(tiro16, inimigo)) {
+            do explosao(tiro16, inimigo);
+        } else { if (inimigoAbatido(tiro17, inimigo)) {
+            do explosao(tiro17, inimigo);
+        } else { if (inimigoAbatido(tiro18, inimigo)) {
+            do explosao(tiro18, inimigo);
+        } else { if (inimigoAbatido(tiro19, inimigo)) {
+            do explosao(tiro19, inimigo);
+        } else { if (inimigoAbatido(tiro20, inimigo)) {
+            do explosao(tiro20, inimigo);
+        }}}}}}}}}}}}}}}}}}}}
+        return;
+    }
+}

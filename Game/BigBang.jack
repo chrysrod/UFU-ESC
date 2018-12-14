@@ -1,0 +1,100 @@
+class BigBang {
+    field NaveDoJogador jogador;
+    field ModeloTiro tiros;
+    field ModeloInimigo inimigos;
+    field int direcao;
+    field int intervaloTiros;
+    field int velocidadeInimigos;
+
+    constructor BigBang new() {
+        let jogador = NaveDoJogador.new(248, 230);
+        let direcao = 0;
+        let tiros = ModeloTiro.new();
+        let inimigos = ModeloInimigo.new();
+        do inimigos.colocaInimigos();
+        return this;
+    }
+
+    method void descartar() {
+        do jogador.descartar();
+        do tiros.descartar();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void movePlayer() {
+        if (direcao = 2) {
+            do jogador.moveUp(); 
+        }
+        if (direcao = 1) {
+            do jogador.moveDown(); 
+        }
+        if (direcao = 3) {
+            do jogador.moveLeft(); 
+        }
+        if (direcao = 4) {
+            do jogador.moveRight(); 
+        }
+        if (direcao > 0) {
+            let direcao = 0; 
+        }
+        return;
+    }
+
+
+    method void endGame(String text) {
+        do Output.moveCursor(10, 25);
+        do Output.printString(text);
+        return;
+    }
+
+    method void jogar() {
+        var char key;
+        var boolean exit;
+        let exit = false;
+
+        while (~exit) {
+            let key = Keyboard.keyPressed();
+            if (key = 81)  { let exit = true; }
+            if (key = 32)  {
+                if (intervaloTiros > 10) {
+                    let intervaloTiros = 0;
+                }
+                else {
+                    if (intervaloTiros = 0) {
+                        do tiros.atirar(jogador.getX(), jogador.getY() - 16);
+                    }
+                    let intervaloTiros = intervaloTiros + 1;
+                }
+            }
+            if (key = 130) { let direcao = 3; }
+            if (key = 132) { let direcao = 4; }
+            if (key = 131) { let direcao = 2; }
+            if (key = 133) { let direcao = 1; }   
+
+            if (velocidadeInimigos > 20) {
+                let velocidadeInimigos = 0;
+            } else {
+                if (velocidadeInimigos = 0) { do inimigos.jogar(); }
+                let velocidadeInimigos = velocidadeInimigos + 1;
+            }
+
+            do movePlayer();
+            do tiros.jogar(inimigos);
+
+            if (~inimigos.algumInimigoVivo()) {
+                do endGame("VOCE GANHOU");
+                let exit = true;
+            }
+            else {
+                if (inimigos.reachedEnd()) {
+                    do endGame("TU PERDEU");
+                    let exit = true;
+                }
+            }
+
+            do Sys.wait(5);
+        }
+        return;
+    }
+}

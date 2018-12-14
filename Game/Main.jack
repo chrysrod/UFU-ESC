@@ -1,0 +1,9 @@
+class Main {
+    function void main() {
+        var BigBang jogo;
+        let jogo = BigBang.new();
+        do jogo.jogar();
+        do jogo.descartar();
+        return;
+    }
+}

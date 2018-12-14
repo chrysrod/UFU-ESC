@@ -1,0 +1,108 @@
+class ModeloInimigo {
+    field naveInimigo inimigo01;
+    field naveInimigo inimigo02;
+    field naveInimigo inimigo03;
+    field naveInimigo inimigo04;
+    field naveInimigo inimigo05;
+    field naveInimigo inimigo06;
+    field naveInimigo inimigo07;
+    field naveInimigo inimigo08;
+
+    constructor ModeloInimigo new() {
+        let inimigo01 = naveInimigo.new();
+        let inimigo02 = naveInimigo.new();
+        let inimigo03 = naveInimigo.new();
+        let inimigo04 = naveInimigo.new();
+        let inimigo05 = naveInimigo.new();
+        let inimigo06 = naveInimigo.new();
+        let inimigo07 = naveInimigo.new();
+        let inimigo08 = naveInimigo.new();
+        return this;
+    }
+
+    method boolean reachedEnd() {
+        if (inimigoChegouFinal(inimigo01)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo02)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo03)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo04)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo05)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo06)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo07)) {
+            return true;
+        } else { if (inimigoChegouFinal(inimigo08)) {
+            return true;
+        }}}}}}}}
+        return false;
+    }
+
+    method boolean algumInimigoVivo() {
+        if (inimigo01.estaVivo()) { return true; }
+        if (inimigo02.estaVivo()) { return true; }
+        if (inimigo03.estaVivo()) { return true; }
+        if (inimigo04.estaVivo()) { return true; }
+        if (inimigo05.estaVivo()) { return true; }
+        if (inimigo06.estaVivo()) { return true; }
+        if (inimigo07.estaVivo()) { return true; }
+        if (inimigo08.estaVivo()) { return true; }
+        return false;
+    }
+
+    method boolean inimigoChegouFinal(naveInimigo e) {
+        return (e.getY() > 229);
+    }
+
+    method void checaInimigoAtingido(ModeloTiro bs) {
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo01);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo02);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo03);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo04);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo05);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo06);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo07);
+        do bs.checaInimigoAbatidoParaCadaTiro(inimigo08);
+        return;
+    }
+
+    method void colocaInimigos() {
+        do inimigo01.colocaInimigos(40, 20);
+        do inimigo02.colocaInimigos(80, 20);
+        do inimigo03.colocaInimigos(120, 20);
+        do inimigo04.colocaInimigos(160, 20);
+        do inimigo05.colocaInimigos(200, 20);
+        do inimigo06.colocaInimigos(240, 20);
+        do inimigo07.colocaInimigos(280, 20);
+        do inimigo08.colocaInimigos(320, 20);
+        return;
+    }
+
+    method void descartar() {
+        do inimigo01.descartar();
+        do inimigo02.descartar();
+        do inimigo03.descartar();
+        do inimigo04.descartar();
+        do inimigo05.descartar();
+        do inimigo06.descartar();
+        do inimigo07.descartar();
+        do inimigo08.descartar();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void jogar() {
+        do inimigo01.jogar();
+        do inimigo02.jogar();
+        do inimigo03.jogar();
+        do inimigo04.jogar();
+        do inimigo05.jogar();
+        do inimigo06.jogar();
+        do inimigo07.jogar();
+        do inimigo08.jogar();
+        return;
+    }
+}

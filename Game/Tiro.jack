@@ -1,0 +1,173 @@
+class Tiro {
+    field int x, y;
+    field boolean estaAtivo;
+    field int sequenciaAnimacao;
+
+    constructor Tiro new() {
+        let x = 0;
+        let y = 0;
+        return this;
+    }
+
+    method void setXY(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        return;
+    }
+
+    method void descartar() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method boolean statusVivo() { return estaAtivo; }
+
+    method void primeiroFrame() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress+0, 384);
+        do Memory.poke(memAddress+32, 384);
+        do Memory.poke(memAddress+64, 384);
+        do Memory.poke(memAddress+96, 384);
+        do Memory.poke(memAddress+128, 384);
+        do Memory.poke(memAddress+160, 384);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 384);
+        do Memory.poke(memAddress+256, 384);
+        do Memory.poke(memAddress+288, 704);
+        do Memory.poke(memAddress+320, 1608);
+        do Memory.poke(memAddress+352, 4128);
+        do Memory.poke(memAddress+384, 17668);
+        do Memory.poke(memAddress+416, 2064);
+        do Memory.poke(memAddress+448, 16512);
+        do Memory.poke(memAddress+480, 1032);
+        return;
+    }
+
+    method void segundoFrame() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress+0, 384);
+        do Memory.poke(memAddress+32, 384);
+        do Memory.poke(memAddress+64, 384);
+        do Memory.poke(memAddress+96, 384);
+        do Memory.poke(memAddress+128, 384);
+        do Memory.poke(memAddress+160, 384);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 512);
+        do Memory.poke(memAddress+320, 5200);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 9488);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 20516);
+        do Memory.poke(memAddress+480, 1296);
+        return;
+    }
+
+    method void terceiroFrame() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress+0, 384);
+        do Memory.poke(memAddress+32, 384);
+        do Memory.poke(memAddress+64, 384);
+        do Memory.poke(memAddress+96, 384);
+        do Memory.poke(memAddress+128, 384);
+        do Memory.poke(memAddress+160, 1408);
+        do Memory.poke(memAddress+192, 416);
+        do Memory.poke(memAddress+224, 384);
+        do Memory.poke(memAddress+256, 384);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 584);
+        do Memory.poke(memAddress+352, 5120);
+        do Memory.poke(memAddress+384, 288);
+        do Memory.poke(memAddress+416, 9224);
+        do Memory.poke(memAddress+448, 32);
+        do Memory.poke(memAddress+480, 21508);
+        return;
+    }
+
+    method void draw() {
+        if (sequenciaAnimacao = 0) {
+            do primeiroFrame();
+        }
+        else {
+            if (sequenciaAnimacao = 1) {
+                do segundoFrame();
+            }
+            else {
+                if (sequenciaAnimacao = 2) {
+                    do terceiroFrame();
+                }
+            }
+        }
+        if (sequenciaAnimacao < 2) {
+            let sequenciaAnimacao = sequenciaAnimacao + 1;
+        }
+        else {
+            let sequenciaAnimacao = 0;
+        }
+        return;
+    }
+
+    method void erase() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+
+    method void atirar(int Ax, int Ay) {
+        do setXY(Ax, Ay);
+        do colocaInimigos();
+        return;
+    }
+
+    method void jogar() {
+        if (estaAtivo) { do movimentoTiro(); }
+        return;
+    }
+
+    method void colocaInimigos() {
+        let estaAtivo = true;
+        do movimentoTiro();
+        return;
+    }
+
+    method void desativar() {
+        let estaAtivo = false;
+        do erase();
+        return;
+    }
+
+    method void movimentoTiro() {
+        if (~estaAtivo) { return; }
+        if (y > 1) {
+            do erase();
+            let y = y - 2;
+            do draw();
+        }
+        else {
+            do desativar();
+        }
+        return;
+    }
+}
